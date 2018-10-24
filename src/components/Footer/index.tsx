@@ -14,16 +14,15 @@ const Footer = () => {
             <div style={{ maxWidth: '500px', margin: '0 auto' }}>
               <p style={{ fontWeight: 600, opacity: 0.8 }}>
                 Great, You have made in this far. It's time tell you a little more about myself. I'm
-                young and innovative Software Engineer with huge motivation, passion for technology
-                and many ideas. Huge Functional Programming enthusiast with interest in Software
-                Architecture, Scalable Systems, Microservices, Artificial Intelligence, Machine
-                Learning and Data Science.
+                a young and innovative Software Engineer with huge motivation, passion for
+                technology and many ideas. Functional Programming enthusiast with interest in
+                Software Architecture, Scalable Systems, Microservices, Artificial Intelligence,
+                Machine Learning and Data Science.
                 <br />
-                <br />
-                In my free time I mostly enjoy sport activities like running and hiking. While not
-                doing that, one might find me cooking, barbecuing or working on my new personal
-                project. Every now and then I need to satisfy my adventure needs and visit some new
-                places off my bucket list.
+                <br />I try to spend most of my free time enyoing sporting activities like running
+                and hiking. While not doing that, one might find me cooking, barbecuing or working
+                on my new personal projects. Every now and then I have to satisfy my adventure needs
+                and visit some undiscovered countries.
               </p>
             </div>
           </div>
