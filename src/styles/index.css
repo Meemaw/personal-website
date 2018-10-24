@@ -1,0 +1,36 @@
+html {
+  background-color: #fff;
+  font-size: 16px;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  min-width: 300px;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
+}
+
+body {
+  color: #293347;
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.5;
+  font-family: 'europa', sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  border-left: 1px solid #e6ecf8;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2d3038;
+}
+
+#root,
+[data-reactroot],
+body,
+html,
+.App {
+  width: 100% !important;
+}
