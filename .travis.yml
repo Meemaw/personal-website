@@ -8,17 +8,12 @@ cache:
   directories:
     - $HOME/.npm
 
-jobs:
-  include:
-    - stage: test
-    - install:
-        - yarn install
-    - script:
-        - yarn lint
-        - yarn test:coverage
-    - stage: deploy
-    - before_script:
-        - sudo pip install awscli
-    - script:
-        - yarn build
-        - aws s3 sync ./build s3://$S3_BUCKET_NAME
+install:
+  - sudo pip install awscli
+  - yarn install
+
+script:
+  - yarn lint
+  - yarn test:coverage
+  - yarn build
+  - aws s3 sync ./build s3://$S3_BUCKET_NAME
