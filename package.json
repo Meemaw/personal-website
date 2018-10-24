@@ -2,7 +2,7 @@
   "name": "personal-website",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://matej.snuderl.si",
+  "homepage": "https://www.matej.snuderl.si",
   "dependencies": {
     "date-fns": "^1.29.0",
     "react": "^16.5.2",

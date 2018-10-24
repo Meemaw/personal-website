@@ -1,16 +1,16 @@
 <!-- Name -->
 
 <h1 align="center">
-  <a href="https://www.matej.snuderl.si/">My Website</a>
+  <a href="https://www.matej.snuderl.si">My Website</a>
 </h1>
 
 <!-- Badges -->
 
 <p align="center">
 
-  <a href="https://travis-ci.com/Meemaw/react-redux-typescript-boilerplate">
+  <a href="https://travis-ci.org/Meemaw/personal-website">
     <img
-       src="https://api.travis-ci.com/Meemaw/react-redux-typescript-boilerplate.svg?branch=master" />
+       src="https://api.travis-ci.org/Meemaw/personal-website.svg?branch=master" />
   </a>
 
   <a href="https://opensource.org/">
