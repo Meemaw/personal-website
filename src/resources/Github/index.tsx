@@ -6,7 +6,7 @@ import { GithubRepository } from '../../meta/types/GithubRepository';
 const { GET } = api;
 
 interface GithubResource {
-  getRepos: ResourceFetch<GithubRepository[], { user: string }>;
+  getRepos: ResourceFetch<GithubRepository[], { user: string; page?: number }>;
   getEvents: ResourceFetch<GithubServerEvent[], { user: string }>;
 }
 

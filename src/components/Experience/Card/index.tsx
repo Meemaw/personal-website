@@ -6,7 +6,6 @@ import styled from 'styled-components';
 type Props = {
   company: string;
   title: string;
-  logo: string;
   website: string;
   city?: string;
   from: Date;
@@ -19,7 +18,6 @@ const ExperienceCard = ({
   to,
   company,
   title,
-  logo,
   website,
   responsibilites = [],
   city = 'Ljubljana, Slovenia',
@@ -29,7 +27,10 @@ const ExperienceCard = ({
   return (
     <ExperienceDetailsStyle>
       <a href={website} target="blank_">
-        <Image src={logo} style={{ height: '70px', width: 'auto' }} />
+        <Image
+          src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${website}`}
+          style={{ height: '20px', width: 'auto' }}
+        />
       </a>
       <div style={{ padding: '0 15px' }}>
         <div style={{ fontWeight: 600 }}>{title}</div>

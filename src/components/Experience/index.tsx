@@ -11,7 +11,7 @@ const Experience = () => {
         <h3>Experience</h3>
         <List divided verticalAlign="middle">
           {EXPERIENCE.map(exp => (
-            <List.Item>
+            <List.Item key={exp.company}>
               <ExperienceCard key={exp.company} {...exp} />
             </List.Item>
           ))}
@@ -39,8 +39,6 @@ const EXPERIENCE = [
     company: 'Sinergise',
     title: 'Software Engineer',
     website: 'https://www.sinergise.com/',
-    logo:
-      'https://media.licdn.com/dms/image/C4D0BAQFrXKp1Rbvw-A/company-logo_400_400/0?e=1548288000&v=beta&t=fKzgKnpXr5-iJ7Br_HlnxtGgZ6n5siWOEXRemY_fBw4',
     from: new Date('2017-07-01'),
     responsibilites: [
       'Integration of Rate Limiting into our core services',
@@ -54,8 +52,6 @@ const EXPERIENCE = [
     company: 'Zemanta',
     title: 'Data Scientist Intern',
     website: 'http://www.zemanta.com/',
-    logo:
-      'https://media.licdn.com/dms/image/C4D0BAQGOtxWZD5_zsQ/company-logo_400_400/0?e=1548288000&v=beta&t=ZYICddz7Wir2_iG6wNISvkkvRcQEep9SOUQ4gVNkWM4',
     from: new Date('2017-01-01'),
     to: new Date('2017-03-01'),
     responsibilites: [
@@ -67,8 +63,6 @@ const EXPERIENCE = [
     company: 'Celtra Inc.',
     title: 'Software Developer Intern',
     website: 'https://www.celtra.com/',
-    logo:
-      'https://media.licdn.com/dms/image/C4D0BAQFbE_lVwqQgdA/company-logo_400_400/0?e=1548288000&v=beta&t=NhE95wT5jyFWYoItku3KDmyBmT6L6AjyRaDNNXcc9vc',
     from: new Date('2016-07-01'),
     to: new Date('2016-08-01'),
     responsibilites: [
@@ -81,8 +75,6 @@ const EXPERIENCE = [
     company: 'Jozef Stefan Institute',
     title: 'Android Developer / Researcher',
     website: 'https://www.ijs.si/ijsw',
-    logo:
-      'https://media.licdn.com/dms/image/C4D0BAQGUx4HQsK01Uw/company-logo_400_400/0?e=1548288000&v=beta&t=gvwyUDHB7YinZtlLenoVF_W_IgOz-wU4bemHdKVxoLQ',
     from: new Date('2016-03-01'),
     to: new Date('2016-05-01'),
   },

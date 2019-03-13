@@ -18,9 +18,19 @@ type State = {
 class RecentActivity extends React.Component<object, State> {
   state: State = { repos: [], commits: [], githubApiError: false };
 
+  fetchRepos = async (
+    user: string,
+    page: number = 1,
+    acc: GithubRepository[] = [],
+  ): Promise<GithubRepository[]> => {
+    const response = await GithubResource.getRepos({ user: 'Meemaw', page });
+    const repos = [...response, ...acc];
+    return response.length < 30 ? repos : this.fetchRepos(user, page + 1, repos);
+  };
+
   async componentDidMount() {
     try {
-      const repos = await GithubResource.getRepos({ user: 'Meemaw' });
+      const repos = await this.fetchRepos('Meemaw');
       const top3 = orderBy(repos, ['stargazers_count'], 'desc').slice(0, 3);
       this.setState({ repos: top3 });
 
