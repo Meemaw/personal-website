@@ -1,17 +1,16 @@
-import * as React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Image, Menu } from 'semantic-ui-react';
-import styled from 'styled-components';
+import LOGO from 'images/l64.png';
+import Hoverable from 'components/animation/Hoverable';
 
-import { ROOT_PATH } from '../../constants/paths';
-import LOGO from '../../images/l64.png';
-import Hoverable from '../animation/Hoverable';
+import { NavbarStyle } from './elements';
 
 const Navbar = () => {
   return (
     <NavbarStyle className="Mavbar">
       <Hoverable>
-        <Image className="Logo" src={LOGO} as={Link} to={ROOT_PATH} />
+        <Image className="Logo" src={LOGO} as={Link} to="/" />
       </Hoverable>
       <Menu.Menu position="right">
         <Hoverable>
@@ -43,16 +42,5 @@ const Navbar = () => {
     </NavbarStyle>
   );
 };
-
-const NavbarStyle = styled(Menu)`
-  padding: 12px;
-  border: 0px;
-
-  .Logo {
-    width: 47px;
-    height: 47px;
-    padding: 3px;
-  }
-`;
 
 export default Navbar;

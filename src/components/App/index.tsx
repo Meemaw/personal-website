@@ -1,9 +1,6 @@
-import '../../styles/index.css';
-
-import * as React from 'react';
-
-import Routes from '../../Routes';
-import Navbar from '../Navbar';
+import React from 'react';
+import Routes from 'pages';
+import Navbar from 'components/Navbar';
 
 const App = () => {
   return (

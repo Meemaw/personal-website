@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type NoPayload = never;
 
 export type ResourceFetchTemplate<R, P = NoPayload> = (

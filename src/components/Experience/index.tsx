@@ -1,38 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { Card, List } from 'semantic-ui-react';
-import styled from 'styled-components';
 
 import ExperienceCard from './Card';
-
-const Experience = () => {
-  return (
-    <ExperienceStyle>
-      <Card>
-        <h3>Experience</h3>
-        <List divided verticalAlign="middle">
-          {EXPERIENCE.map(exp => (
-            <List.Item key={exp.company}>
-              <ExperienceCard key={exp.company} {...exp} />
-            </List.Item>
-          ))}
-        </List>
-      </Card>
-    </ExperienceStyle>
-  );
-};
-
-const ExperienceStyle = styled.div`
-  padding: 20px;
-  position: relative;
-  z-index: 10;
-
-  .card {
-    max-width: 750px;
-    margin: 0 auto;
-    width: 100%;
-    padding: 15px;
-  }
-`;
+import { ExperienceStyle } from './elements';
 
 const EXPERIENCE = [
   {
@@ -79,5 +49,22 @@ const EXPERIENCE = [
     to: new Date('2016-05-01'),
   },
 ];
+
+const Experience = () => {
+  return (
+    <ExperienceStyle>
+      <Card>
+        <h3>Experience</h3>
+        <List divided verticalAlign="middle">
+          {EXPERIENCE.map(exp => (
+            <List.Item key={exp.company}>
+              <ExperienceCard key={exp.company} {...exp} />
+            </List.Item>
+          ))}
+        </List>
+      </Card>
+    </ExperienceStyle>
+  );
+};
 
 export default Experience;

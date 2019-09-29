@@ -1,7 +1,8 @@
 import { differenceInDays, format } from 'date-fns';
-import * as React from 'react';
+import React from 'react';
 import { Image, List } from 'semantic-ui-react';
-import styled from 'styled-components';
+
+import { ExperienceCardStyle, Loyalty } from './elements';
 
 type Props = {
   company: string;
@@ -13,6 +14,17 @@ type Props = {
   responsibilites?: string[];
 };
 
+const getDifference = (from: Date, to?: Date) => {
+  const diff = differenceInDays(to || new Date(), from);
+  const years = Math.floor(diff / 365);
+  const months = Math.ceil(diff / 31);
+  if (years >= 1) {
+    return `${years} yr ${months - years * 12} mos`;
+  } else {
+    return `${months + 1} mos`;
+  }
+};
+
 const ExperienceCard = ({
   from,
   to,
@@ -22,10 +34,11 @@ const ExperienceCard = ({
   responsibilites = [],
   city = 'Ljubljana, Slovenia',
 }: Props) => {
-  const fromDateString = format(from, 'MMM YYYY');
-  const toDateString = to ? format(to, 'MMM YYYY') : 'Present';
+  const fromDateString = format(from, 'MMM yyyy');
+  const toDateString = to ? format(to, 'MMM yyyy') : 'Present';
+
   return (
-    <ExperienceDetailsStyle>
+    <ExperienceCardStyle>
       <a href={website} target="blank_">
         <Image
           src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${website}`}
@@ -40,7 +53,7 @@ const ExperienceCard = ({
         </a>
         <div className="Duration Detail">
           <span>{`${fromDateString} - ${toDateString}`}</span>
-          <span className="Loyalty">{getDifference(from, to)}</span>
+          <Loyalty>{getDifference(from, to)}</Loyalty>
         </div>
         <div className="Detail">{city}</div>
 
@@ -52,48 +65,8 @@ const ExperienceCard = ({
           </List>
         ) : null}
       </div>
-    </ExperienceDetailsStyle>
+    </ExperienceCardStyle>
   );
 };
-
-const getDifference = (from: Date, to?: Date) => {
-  const diff = differenceInDays(to || new Date(), from);
-  const years = Math.floor(diff / 365);
-  const months = Math.ceil(diff / 31);
-  if (years >= 1) {
-    return `${years} yr ${months - years * 12} mos`;
-  } else {
-    return `${months + 1} mos`;
-  }
-};
-
-const ExperienceDetailsStyle = styled.div`
-  display: flex;
-  padding: 15px 3px;
-
-  .Company {
-    font-size: 0.9rem;
-    font-weight: 500;
-  }
-
-  .Detail {
-    opacity: 0.7;
-    font-size: 0.7rem;
-  }
-
-  .Duration {
-    margin-top: 6px;
-  }
-
-  .list > .item {
-    font-size: 0.75rem !important;
-    opacity: 0.65 !important;
-  }
-
-  .Duration > .Loyalty::before {
-    content: '\00B7';
-    margin: 0 3px;
-  }
-`;
 
 export default ExperienceCard;

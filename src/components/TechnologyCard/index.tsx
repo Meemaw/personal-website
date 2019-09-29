@@ -1,6 +1,7 @@
-import * as React from 'react';
-import { Card, Header, Icon, List, SemanticICONS } from 'semantic-ui-react';
-import styled from 'styled-components';
+import React from 'react';
+import { Header, Icon, List, SemanticICONS } from 'semantic-ui-react';
+
+import { CardStyle } from './elements';
 
 type Props = {
   title: string;
@@ -48,14 +49,5 @@ const TechnologyCard = ({
     </CardStyle>
   );
 };
-
-const CardStyle = styled(Card)`
-  padding: 15px;
-
-  .CardContent {
-    text-align: center;
-    padding: 10px;
-  }
-`;
 
 export default TechnologyCard;
