@@ -1,11 +1,12 @@
-import * as React from 'react';
+import { ROOT_PATH } from 'constants/paths';
+
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Image, Menu } from 'semantic-ui-react';
-import styled from 'styled-components';
+import LOGO from 'images/l64.png';
+import Hoverable from 'components/animation/Hoverable';
 
-import { ROOT_PATH } from '../../constants/paths';
-import LOGO from '../../images/l64.png';
-import Hoverable from '../animation/Hoverable';
+import { NavbarStyle } from './elements';
 
 const Navbar = () => {
   return (
@@ -43,16 +44,5 @@ const Navbar = () => {
     </NavbarStyle>
   );
 };
-
-const NavbarStyle = styled(Menu)`
-  padding: 12px;
-  border: 0px;
-
-  .Logo {
-    width: 47px;
-    height: 47px;
-    padding: 3px;
-  }
-`;
 
 export default Navbar;

@@ -1,45 +1,14 @@
-import 'raf/polyfill';
+import '@testing-library/jest-dom/extend-expect';
 
-import * as enzyme from 'enzyme';
-import * as Adapter from 'enzyme-adapter-react-16';
+const originalConsoleError = console.error;
 
-enzyme.configure({
-  adapter: new Adapter(),
-  disableLifecycleMethods: true,
-});
+// Throw Error if any of those occurs during unit tests
+const THROWING_MESSAGES = ['SyntaxError:', 'ECONNREFUSED'];
 
-const globalAny: any = global;
+console.error = (message: string) => {
+  originalConsoleError(message);
 
-globalAny.enzyme = enzyme;
-
-// Fail tests on any warning
-console.error = (message: any) => {
-  console.log(message);
-  throw new Error(message);
+  if (THROWING_MESSAGES.includes(String(message))) {
+    throw new Error(message);
+  }
 };
-
-class LocalStorageMock {
-  store: object;
-
-  constructor() {
-    this.store = {};
-  }
-
-  clear() {
-    this.store = {};
-  }
-
-  getItem(key: string) {
-    return this.store[key] || null;
-  }
-
-  setItem(key: string, value: any) {
-    this.store[key] = value.toString();
-  }
-
-  removeItem(key: string) {
-    delete this.store[key];
-  }
-}
-
-globalAny.localStorage = new LocalStorageMock();

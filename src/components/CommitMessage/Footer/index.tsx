@@ -1,47 +1,29 @@
 import { format } from 'date-fns';
-import * as React from 'react';
+import React from 'react';
 import { Image } from 'semantic-ui-react';
-import styled from 'styled-components';
+
+import { Footer } from './elements';
 
 type Props = {
-  avatar_url: string;
+  avatarUrl: string;
   username: string;
-  created_at: Date;
+  createdAt: Date;
 };
 
-const CommitFooter = ({ avatar_url, username, created_at }: Props) => {
+const CommitFooter = ({ avatarUrl, username, createdAt }: Props) => {
+  const commitedOn = format(createdAt, 'd MMM yyyy');
+
   return (
-    <FooterStyle>
-      <Image className="Avatar" src={avatar_url} />
+    <Footer>
+      <Image className="Avatar" src={avatarUrl} />
       <div style={{ textAlign: 'left' }}>
-        <a href="https://github.com/Meemaw/" target="_blank">
+        <a href="https://github.com/Meemaw/" target="_blank" rel="noopener noreferrer">
           {username}
         </a>
-        {` commited on: ${format(created_at, 'D MMM YYYY')}`}
+        {` commited on: ${commitedOn}`}
       </div>
-    </FooterStyle>
+    </Footer>
   );
 };
-
-const FooterStyle = styled.div`
-  display: flex;
-  font-size: 0.9rem;
-  margin-top: 8px;
-  font-weight: 400;
-  color: #586069;
-  align-items: center;
-
-  .Avatar {
-    height: 23px;
-    min-width: 23px;
-    margin-right: 8px;
-    align-self: flex-start;
-  }
-
-  a {
-    color: #586069;
-    font-weight: 600;
-  }
-`;
 
 export default CommitFooter;

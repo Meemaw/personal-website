@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { Button, Card, Icon, Label } from 'semantic-ui-react';
-import styled from 'styled-components';
+import React from 'react';
+import { Button, Icon, Label } from 'semantic-ui-react';
+import { GithubRepositoryDTO } from 'meta/types/github';
 
-import { GithubRepository } from '../../meta/types/GithubRepository';
+import { ShowcareRepoCard } from './elements';
 
 type Props = {
-  repo: GithubRepository;
+  repo: GithubRepositoryDTO;
 };
 
 const ShowcareRepo = ({ repo }: Props) => {
@@ -37,7 +37,7 @@ const ShowcareRepo = ({ repo }: Props) => {
         </Button>
       </section>
 
-      <a href={repo.html_url} target="_blank" className="RepoName">
+      <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="RepoName">
         <h3>{repo.full_name}</h3>
       </a>
 
@@ -45,37 +45,5 @@ const ShowcareRepo = ({ repo }: Props) => {
     </ShowcareRepoCard>
   );
 };
-
-const ShowcareRepoCard = styled(Card)`
-  padding: 15px !important;
-  max-width: 500px !important;
-  width: 100% !important;
-
-  .RepoName {
-    margin: 26px;
-  }
-
-  .Actions {
-    display: flex;
-    justify-content: center;
-  }
-
-  @media screen and (max-width: 500px) {
-    margin: 0px !important;
-
-    .Actions {
-      flex-direction: column;
-    }
-
-    button {
-      width: 150px;
-    }
-
-    .Actions > div {
-      width: 100%;
-      justify-content: center;
-    }
-  }
-`;
 
 export default ShowcareRepo;

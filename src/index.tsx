@@ -1,23 +1,25 @@
-import * as React from 'react';
+import 'styles/index.css';
+
+import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import AppComponent from './components/App';
+import App from './pages';
 
-function renderApp(App: any) {
+function renderApp(AppComponent: typeof App) {
   render(
     <Router>
-      <App />
+      <AppComponent />
     </Router>,
     document.getElementById('root'),
   );
 }
 
-renderApp(AppComponent);
+renderApp(App);
 
 if (module.hot) {
   module.hot.accept('./components/App', () => {
-    const NextApp = require('./components/App').default;
+    const NextApp: typeof App = require('./components/App').default;
     renderApp(NextApp);
   });
 }

@@ -2,49 +2,61 @@
   "name": "personal-website",
   "version": "0.1.0",
   "private": true,
+  "author": "Meemaw <ematej.snuderl@gmail.com>",
+  "license": "MIT",
   "homepage": "https://www.matej.snuderl.si",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Meemaw/personal-website"
+  },
+  "bugs": {
+    "url": "https://github.com/Meemaw/personal-website/issues"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom --watchAll --verbose",
+    "test:coverage": "react-scripts test --env=jsdom --color --coverage --verbose",
+    "lint": "concurrently \"npm run prettier\" \"npm run eslint\"",
+    "eslint": "eslint --max-warnings 0 --ext .ts 'src/**/*'",
+    "prettier": "prettier --config .prettierrc -l 'src/**/*.{ts,tsx}*' || (echo \nThese files are not formatted correctly && false)"
+  },
   "dependencies": {
-    "date-fns": "^1.29.0",
+    "date-fns": "^2.4.1",
+    "lodash.flatten": "^4.4.0",
+    "lodash.orderby": "^4.6.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-ga": "^2.5.3",
-    "react-loadable": "^5.5.0",
-    "react-particles-js": "^2.3.0",
-    "react-pose": "^3.3.7",
+    "react-particles-js": "^2.7.0",
+    "react-pose": "^4.0.8",
     "react-pose-text": "^3.1.0",
-    "react-router-dom": "^4.3.1",
-    "react-scripts-ts": "2.17.0",
-    "semantic-ui-react": "^0.83.0",
-    "styled-components": "^4.0.2"
-  },
-  "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom --watchAll --verbose",
-    "test:coverage": "react-scripts-ts test --env=jsdom --color --coverage --verbose",
-    "lint": "yarn run lint-prettier",
-    "lint-prettier": "prettier --config .prettierrc -l 'src/**/*.tsx*' || (echo \nThese files are not formatted correctly && false)",
-    "prettier": "prettier --config .prettierrc --write 'src/**/*.tsx*'"
+    "react-router-dom": "^5.1.1",
+    "react-scripts": "3.1.2",
+    "semantic-ui-react": "^0.88.1",
+    "styled-components": "^4.4.0"
   },
   "devDependencies": {
-    "@types/enzyme": "^3.1.14",
-    "@types/enzyme-adapter-react-16": "^1.0.3",
-    "@types/styled-components": "^4.0.2",
-    "@types/jest": "^23.3.2",
-    "@types/lodash": "^4.14.117",
-    "@types/node": "10.9.4",
+    "@testing-library/jest-dom": "^4.1.0",
+    "@types/jest": "^24.0.11",
+    "@types/lodash.flatten": "^4.4.6",
+    "@types/lodash.orderby": "^4.6.6",
+    "@types/node": "12.7.8",
     "@types/react": "^16.4.14",
-    "@types/react-dom": "16.0.7",
-    "@types/react-loadable": "^5.4.1",
-    "@types/react-router-dom": "^4.3.1",
-    "@types/react-slick": "^0.23.2",
-    "@types/sinon": "^5.0.4",
+    "@types/react-dom": "16.9.1",
+    "@types/react-router-dom": "^5.1.0",
+    "@types/sinon": "^7.0.3",
+    "@types/styled-components": "^4.0.2",
     "@types/webpack-env": "^1.13.6",
-    "enzyme": "^3.7.0",
-    "enzyme-adapter-react-16": "^1.6.0",
+    "@typescript-eslint/eslint-plugin": "^2.3.1",
+    "@typescript-eslint/parser": "^2.3.1",
+    "concurrently": "^4.1.2",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
     "prettier": "^1.14.3",
     "sinon": "^7.0.0",
-    "typescript": "3.0.3"
+    "typescript": "3.6.3"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -54,6 +66,18 @@
       "src/components/**",
       "src/hocs/**",
       "src/lib/**"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ]
   }
 }

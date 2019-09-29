@@ -1,5 +1,6 @@
-import * as React from 'react';
-import styled from 'styled-components';
+import React from 'react';
+
+import { Title } from './elements';
 
 type Props = {
   message: string;
@@ -10,28 +11,17 @@ type Props = {
 
 const CommitTitle = ({ message, repoName, commitUrl, repoUrl }: Props) => {
   return (
-    <TitleStyle>
+    <Title>
       <span>Commited </span>
-      <a href={commitUrl} target="_blank">
-        "{message}"
+      <a href={commitUrl} target="_blank" rel="noopener noreferrer">
+        &quot;{message}&quot;
       </a>
       <span> to Github repository </span>
-      <a href={repoUrl} target="_blank">
+      <a href={repoUrl} target="_blank" rel="noopener noreferrer">
         {repoName}
       </a>
-    </TitleStyle>
+    </Title>
   );
 };
-
-const TitleStyle = styled.div`
-  text-align: left;
-  color: #444d56;
-  font-weight: 600;
-  font-size: 0.85rem;
-
-  span {
-    font-weight: 300;
-  }
-`;
 
 export default CommitTitle;

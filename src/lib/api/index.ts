@@ -1,4 +1,5 @@
-import * as EventEmitter from 'events';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { EventEmitter } from 'events';
 
 import {
   EndpointConfig,
@@ -6,27 +7,29 @@ import {
   FetchConfig,
   ResourceFetch,
   ResourceFetchTemplate,
-} from '../../meta/types/Api';
-import { ContentTypes } from '../../meta/types/Content';
-import { HttpMethod, HttpStatus } from '../../meta/types/Http';
-import { getAuthorizationHeader } from '../auth';
-import { toFormData } from '../form';
-import { injectParameters } from '../urls';
+} from 'meta/types/api';
+import { HttpMethod, HttpStatus } from 'meta/types/http';
+import { ContentTypes } from 'meta/types/content';
+import { getAuthorizationHeader } from 'lib/auth';
+import { toFormData } from 'lib/form';
+import { injectParameters } from 'lib/urls';
+
+type Dictionary<T> = { [key: string]: T };
 
 type Mappings = {
   [contentType: string]: (resp: any) => any;
 };
 
-const defaultHeaders: HeadersInit = {};
+const defaultHeaders: Dictionary<string> = {};
 
 const contentTypeMappings: Mappings = {
   [ContentTypes.JSON]: resp => resp.json(),
+  [ContentTypes.JSON_UTF_8]: resp => resp.json(),
   [ContentTypes.JS]: resp => resp.json(),
   [ContentTypes.XML]: resp => resp.text(),
   [ContentTypes.TEXT]: resp => resp.text(),
   [ContentTypes.CSV]: resp => resp.text(),
   [ContentTypes.HTML]: resp => resp.text(),
-  ['application/json; charset=utf-8']: resp => resp.json(),
 };
 
 const DEFAULT_ENDPOINT_CONFIG: EndpointConfig = {
@@ -45,7 +48,7 @@ class Api extends EventEmitter implements FetchApi {
     defaultHeaders[key] = value;
   };
 
-  _makeMethod(method: HttpMethod, hasBody: boolean = false): ResourceFetchTemplate<any, any> {
+  _makeMethod(method: HttpMethod, hasBody = false): ResourceFetchTemplate<any, any> {
     return (
       urlTemplate: string,
       endpointConfig: EndpointConfig = DEFAULT_ENDPOINT_CONFIG,
@@ -54,7 +57,7 @@ class Api extends EventEmitter implements FetchApi {
         const url = injectParameters(urlTemplate, data, hasBody);
         const { authenticated, endpointHeaders } = endpointConfig;
 
-        const headers: HeadersInit = {
+        const headers: any = {
           Accept: ContentTypes.JSON,
           ...defaultHeaders,
           ...endpointHeaders,
@@ -94,10 +97,14 @@ class Api extends EventEmitter implements FetchApi {
       headers,
       body,
     })
-      .then((response: any) => {
+      .then(response => {
         this.emit(`${response.status}`, url);
         const contentType = response.headers.get('Content-Type');
-        const mappingFunction = contentTypeMappings[contentType] || (resp => resp.arrayBuffer());
+        const defaultMapping = (resp: Response) => resp.arrayBuffer();
+        let mappingFunction = contentType ? contentTypeMappings[contentType] : defaultMapping;
+        if (!mappingFunction) {
+          mappingFunction = defaultMapping;
+        }
 
         return new Promise(resolve => resolve(mappingFunction(response)))
           .catch(err => {
@@ -107,7 +114,7 @@ class Api extends EventEmitter implements FetchApi {
               message: err,
             });
           })
-          .then((responseBody: any) => {
+          .then(responseBody => {
             if (response.ok) {
               return responseBody;
             }
@@ -128,7 +135,7 @@ class Api extends EventEmitter implements FetchApi {
             }
           });
       })
-      .catch((err: any) => {
+      .catch(err => {
         return err.type
           ? Promise.reject(err)
           : Promise.reject({
