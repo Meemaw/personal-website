@@ -1,6 +1,6 @@
 import { GithubEventDTO, GithubRepositoryDTO } from 'meta/types/github';
 import api from 'lib/api';
-import { ResourceFetch } from 'meta/types/Api';
+import { ResourceFetch } from 'meta/types/api';
 
 const { GET } = api;
 

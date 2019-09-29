@@ -1,6 +1,6 @@
 import orderBy from 'lodash.orderby';
 import flatten from 'lodash.flatten';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Divider } from 'semantic-ui-react';
 import { GithubResource } from 'resources';
 import CommitMessage from 'components/CommitMessage';
@@ -11,16 +11,21 @@ import { fetchGithubRepos } from './api';
 import { GithubActivity } from './types';
 import { fromEventDTO, fromCommitDTO } from './utils';
 
-const RecentActivity = () => {
+type Props = {
+  user?: string;
+  numRepos?: number;
+};
+
+const RecentActivity = ({ user = 'Meemaw', numRepos = 3 }: Props) => {
   const [recentActivity, setRecentActivity] = useState<GithubActivity>({ repos: [], commits: [] });
   const [apiError, setApiError] = useState<Error>();
 
-  const fetchRecentActivity = async () => {
+  const fetchRecentActivity = useCallback(async () => {
     try {
-      const repos = await fetchGithubRepos('Meemaw');
-      const top3 = orderBy(repos, ['stargazers_count'], 'desc').slice(0, 3);
+      const repos = await fetchGithubRepos(user);
+      const topRepositories = orderBy(repos, ['stargazers_count'], 'desc').slice(0, numRepos);
 
-      const serverEvents = await GithubResource.getEvents({ user: 'Meemaw' });
+      const serverEvents = await GithubResource.getEvents({ user });
       const commitsForServerEvents = serverEvents
         .map(fromEventDTO)
         .filter(event => event.type === 'PushEvent')
@@ -29,16 +34,17 @@ const RecentActivity = () => {
         );
 
       const commits = flatten(commitsForServerEvents).slice(0, 5);
-      setRecentActivity({ commits, repos: top3 });
+      setRecentActivity({ commits, repos: topRepositories });
     } catch (err) {
       console.error(err);
       setApiError(err);
+      setTimeout(fetchRecentActivity, 15000);
     }
-  };
+  }, [user, numRepos]);
 
   useEffect(() => {
     fetchRecentActivity();
-  }, []);
+  }, [fetchRecentActivity]);
 
   if (apiError) {
     return null;

@@ -1,5 +1,3 @@
-import { ROOT_PATH } from 'constants/paths';
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Image, Menu } from 'semantic-ui-react';
@@ -12,7 +10,7 @@ const Navbar = () => {
   return (
     <NavbarStyle className="Mavbar">
       <Hoverable>
-        <Image className="Logo" src={LOGO} as={Link} to={ROOT_PATH} />
+        <Image className="Logo" src={LOGO} as={Link} to="/" />
       </Hoverable>
       <Menu.Menu position="right">
         <Hoverable>
