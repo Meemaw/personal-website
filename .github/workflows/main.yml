@@ -1,0 +1,30 @@
+name: CI
+
+on: [push]
+
+jobs:
+  ci:
+    name: Lint, test, deploy
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - name: Install Dependencies
+        run: yarn install
+      - name: Run linters
+        run: yarn lint
+      - name: Run tests
+        run: yarn test:coverage
+      - name: Build & deploy
+        if: github.ref == 'master'
+        run: |
+          yarn build
+          aws s3 sync ./build s3://$S3_BUCKET_NAME
+          aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_DISTRIBUTION --paths "/*"
