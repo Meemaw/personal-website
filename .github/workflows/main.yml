@@ -23,7 +23,7 @@ jobs:
       - name: Run tests
         run: yarn test:coverage
       - name: Build & deploy
-        if: github.ref == 'master'
+        if: github.ref == 'refs/heads/master'
         run: |
           yarn build
           aws s3 sync ./build s3://$S3_BUCKET_NAME
