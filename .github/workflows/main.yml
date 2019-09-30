@@ -14,6 +14,6 @@ jobs:
       - name: Run linters
         run: yarn lint
       - name: Run tests
-        run: test:coverage
+        run: yarn test:coverage
       - name: Build
         run: yarn build
