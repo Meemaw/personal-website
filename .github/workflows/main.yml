@@ -24,7 +24,10 @@ jobs:
         run: yarn test:coverage
       - name: Build & deploy
         if: github.ref == 'refs/heads/master'
+        env:
+          AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
+          AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
         run: |
           yarn build
-          aws s3 sync ./build s3://$S3_BUCKET_NAME
-          aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_DISTRIBUTION --paths "/*"
+          aws s3 sync ./build s3://$AWS_S3_BUCKET_NAME
+          aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
