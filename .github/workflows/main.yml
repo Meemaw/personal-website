@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: terraform-fmt
-        uses: hashicorp/terraform-github-actions/fmt@v0.44
+        uses: hashicorp/terraform-github-actions/fmt@v0.4.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TF_ACTION_WORKING_DIR: ./infrastructure
