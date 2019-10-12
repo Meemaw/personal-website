@@ -3,8 +3,12 @@ provider "aws" {
 }
 
 locals {
-  site_zone = "snuderl.si"
-  site_name = "www.matej.${local.site_zone}"
+  site_zone          = "snuderl.si"
+  www_site_zone      = "www.${local.site_zone}"
+  site_name          = "matej.${local.site_zone}"
+  www_site_name      = "www.${local.site_name}"
+  certificate_domain = local.www_site_name
+  s3_origin_id       = "S3-${local.site_name}"
 }
 
 data "aws_route53_zone" "site_zone" {
@@ -12,7 +16,7 @@ data "aws_route53_zone" "site_zone" {
 }
 
 data "aws_acm_certificate" "cert" {
-  domain   = local.site_name
+  domain   = local.certificate_domain
   statuses = ["ISSUED"]
   types    = ["AMAZON_ISSUED"]
 }
@@ -30,7 +34,7 @@ resource "aws_s3_bucket" "site" {
       "Effect": "Allow",
       "Principal": "*",
       "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::${local.bucket_name}/*"
+      "Resource": "arn:aws:s3:::${local.site_name}/*"
     }
   ]
 }
@@ -40,24 +44,31 @@ EOF
     index_document = "index.html"
     error_document = "index.html"
   }
+
+  tags = {
+    Environment = "production"
+    Project = "personal-website"
+  }
 }
 
 resource "aws_cloudfront_distribution" "site_distribution" {
   origin {
     domain_name = aws_s3_bucket.site.bucket_domain_name
-    origin_id = "S3-${local.site_name}"
+    origin_id = local.s3_origin_id
   }
 
   enabled = true
-  aliases = [local.site_name, "www.${local.site_name}"]
+  aliases = [local.site_name, local.www_site_name]
   default_root_object = "index.html"
   is_ipv6_enabled = true
   wait_for_deployment = false
+  comment = "Managed by Terraform - https://github.com/Meemaw/personal-website/"
+
 
   default_cache_behavior {
     allowed_methods = ["GET", "HEAD"]
     cached_methods = ["GET", "HEAD"]
-    target_origin_id = "S3-${local.site_name}"
+    target_origin_id = local.s3_origin_id
 
     forwarded_values {
       query_string = false
@@ -67,10 +78,10 @@ resource "aws_cloudfront_distribution" "site_distribution" {
       }
     }
 
-    viewer_protocol_policy = "redirect-to-https"
     min_ttl = 0
-    default_ttl = 86400
-    max_ttl = 31536000
+    default_ttl = 3600
+    max_ttl = 86400
+    viewer_protocol_policy = "redirect-to-https"
   }
 
   custom_error_response {
@@ -98,6 +109,11 @@ resource "aws_cloudfront_distribution" "site_distribution" {
     }
   }
 
+  tags = {
+    Environment = "production"
+    Project = "personal-website"
+  }
+
   viewer_certificate {
     acm_certificate_arn = data.aws_acm_certificate.cert.arn
     ssl_support_method = "sni-only"
@@ -105,7 +121,7 @@ resource "aws_cloudfront_distribution" "site_distribution" {
   }
 }
 
-resource "aws_route53_record" "site" {
+resource "aws_route53_record" "cloudfront_site_target" {
   zone_id = data.aws_route53_zone.site_zone.zone_id
   name = local.site_name
   type = "A"
@@ -116,12 +132,3 @@ resource "aws_route53_record" "site" {
     evaluate_target_health = false
   }
 }
-
-resource "aws_route53_record" "www_site" {
-  zone_id = data.aws_route53_zone.site_zone.zone_id
-  name = "www.${aws_route53_record.site.name}"
-  type = "CNAME"
-  records = [aws_route53_record.site.name]
-  ttl = 300
-}
-

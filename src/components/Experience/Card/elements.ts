@@ -28,6 +28,6 @@ export const Loyalty = styled.span`
   margin: 0 3px;
 
   :before {
-    content: "\00b7";
+    content: "\\00b7";
   }
 `;
