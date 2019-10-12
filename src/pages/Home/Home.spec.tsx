@@ -27,12 +27,13 @@ describe('HomePage', () => {
   });
 
   it('Should render most starred Github repositories', async () => {
-    const MOST_STARRED_REPO = 'Meemaw/react-micro-modal';
+    const MOST_STARRED_REPO_DESCRIPTION =
+      'Accessible, lightweight and configurable modal component with a11y-enabled.';
 
     const { queryByText, container } = render(<HomePage />);
     expect(queryByText('Most starred repos')).toBeInTheDocument();
 
-    await waitForElement(() => queryByText(MOST_STARRED_REPO));
+    await waitForElement(() => queryByText(MOST_STARRED_REPO_DESCRIPTION));
 
     const reposElement = container.querySelector('div.Repos') as HTMLElement;
     expect(reposElement.childElementCount).toEqual(4); // show top 3 repositories (1 is header element)
