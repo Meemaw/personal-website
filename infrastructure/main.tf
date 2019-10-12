@@ -4,6 +4,7 @@ provider "aws" {
 
 locals {
   site_zone          = "snuderl.si"
+  www_site_zone      = "www.${local.site_zone}"
   site_name          = "matej.${local.site_zone}"
   www_site_name      = "www.${local.site_name}"
   certificate_domain = local.www_site_name
@@ -57,7 +58,7 @@ resource "aws_cloudfront_distribution" "site_distribution" {
   }
 
   enabled = true
-  aliases = [local.site_name, local.www_site_name]
+  aliases = [local.site_name, local.www_site_name, local.site_zone, local.www_site_zone]
   default_root_object = "index.html"
   is_ipv6_enabled = true
   wait_for_deployment = false
@@ -129,5 +130,41 @@ resource "aws_route53_record" "cloudfront_site_target" {
     zone_id = aws_cloudfront_distribution.site_distribution.hosted_zone_id
     name = aws_cloudfront_distribution.site_distribution.domain_name
     evaluate_target_health = false
+  }
+}
+
+resource "aws_route53_record" "www_site_name_alias" {
+  zone_id = data.aws_route53_zone.site_zone.zone_id
+  name = local.www_site_name
+  type = "A"
+
+  alias {
+    zone_id = aws_cloudfront_distribution.site_distribution.hosted_zone_id
+    name = aws_cloudfront_distribution.site_distribution.domain_name
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "site_zone_alias" {
+  zone_id = data.aws_route53_zone.site_zone.zone_id
+  name = local.site_zone
+  type = "A"
+
+  alias {
+    zone_id = aws_cloudfront_distribution.site_distribution.hosted_zone_id
+    name = aws_cloudfront_distribution.site_distribution.domain_name
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "www_site_zone_alias" {
+  zone_id = data.aws_route53_zone.site_zone.zone_id
+  name = local.www_site_zone
+  type = "A"
+
+  alias {
+    zone_id = aws_cloudfront_distribution.site_distribution.hosted_zone_id
+    name = aws_cloudfront_distribution.site_distribution.domain_name
+    evaluate_target_health = true
   }
 }
