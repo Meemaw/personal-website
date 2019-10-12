@@ -4,7 +4,6 @@ provider "aws" {
 
 locals {
   site_zone          = "snuderl.si"
-  www_site_zone      = "www.${local.site_zone}"
   site_name          = "matej.${local.site_zone}"
   www_site_name      = "www.${local.site_name}"
   certificate_domain = local.www_site_name
