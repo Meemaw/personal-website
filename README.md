@@ -1,20 +1,7 @@
-<!-- Name -->
+# Personal website
 
-<h1 align="center">
-  <a href="https://www.matej.snuderl.si">My Website</a>
-</h1>
+[![Build Status](https://travis-ci.org/Meemaw/personal-website.svg?branch=master)](https://travis-ci.org/Meemaw/personal-website) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier) [![Open source: open-source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
 
-<!-- Badges -->
+#### Availability
 
-<p align="center">
-
-  <a href="https://travis-ci.org/Meemaw/personal-website">
-    <img
-       src="https://api.travis-ci.org/Meemaw/personal-website.svg?branch=master" />
-  </a>
-
-  <a href="https://opensource.org/">
-    <img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=103"/>
-  </a>
-
-</p>
+Available on [https://www.matej.snuderl.si](https://www.matej.snuderl.si).
