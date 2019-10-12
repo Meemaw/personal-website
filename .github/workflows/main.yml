@@ -1,10 +1,10 @@
 name: CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   infrastructure:
-    name: fmt
+    name: init, validate, plan
     runs-on: ubuntu-latest
     env:
       TF_ACTION_WORKING_DIR: ./infrastructure
