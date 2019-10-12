@@ -1,25 +1,7 @@
-name: CI
-
-on: [push, pull_request]
+name: Application
+on: [push]
 
 jobs:
-  infrastructure:
-    name: init, validate, plan
-    runs-on: ubuntu-latest
-    env:
-      TF_ACTION_WORKING_DIR: ./infrastructure
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.TERRAFORM_AWS_SECRET_ACCESS_KEY }}
-    steps:
-      - uses: actions/checkout@v1
-      - name: terraform-init
-        uses: hashicorp/terraform-github-actions/init@v0.4.4
-      - name: terraform-validate
-        uses: hashicorp/terraform-github-actions/validate@v0.4.4
-      - name: terraform-plan
-        uses: hashicorp/terraform-github-actions/plan@v0.4.4
-
   application:
     name: Lint, test, deploy
     runs-on: ubuntu-latest
